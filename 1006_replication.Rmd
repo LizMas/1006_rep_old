@@ -1,0 +1,101 @@
+---
+title: "Milestone 8" 
+author: "Liz Masten"
+date: "4/4/2020"
+output: bookdown::pdf_document2
+bibliography: bib2.bib
+biblio-style: apalike 
+link_citations: TRUE
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(foreign)
+library(tinytex)
+library(gt)
+library(bookdown)
+library(stargazer)
+library(bibtex)
+library(yaml)
+library(knitcitations)
+library(magick)
+library(memisc)
+library(pscl)
+library(MASS)
+library(amen)
+library(clusterSEs)
+library(RStata)
+library(tidyverse)
+```
+
+```{r}
+
+# data from errata 
+
+data <- read.dta("updated_data.dta")
+
+```
+
+
+# Abstract 
+
+Michael Findley, James Piazza, and Joseph Young show, in their paper "Games Rivals Play: Terrorism in International Rivalries," that interstate rivalries are a positive predictor of transnational terrorist activity. The authors argue that terrorism is often a component of broader hostilities that can be emperically analyzed using a series of politicaly relevant directed dyads. While this paper is a successful replication of their work, my subsequent extension calls into question their choice to use dyadic analysis. When using country-year analysis as opposed to directed dyad analysis, I find that ... idk yet... Why care? something something calls into question the trend of using dyadic analysis for all international conflict research... or something. 
+
+# Introduction 
+
+Findley, Piazza, and Young analyze transnational terrorism as a component of interstate rivalries, specifically focusing on the use of terrorism in proxy warfighting. Their main argument is that terrorist attacks are more likely to occur in the context of a rivalry between two states than in the absence of such a rivalry. They empirically test their hypothesis by analyzing “politically relevant directed state dyads.” They define politically relevant as states where “relationships of interest are at least possible” and utilize directed state dyads to indicate directionality of attacks (i.e. the state where the attack originated) in which there exists at least one major power. 
+
+I was able to successfully replicate the authors' findings in this paper exactly. Note that the authors suffered from a data management error at the time of publication and subsequently published errata results.(cite where I got data here). I based my analysis on the revised data and tables, which can be found in the Appendix. Because there are no directly analagous R packages to translate the authors' original STATA code, I wrote and managed the project in R while running the replication and extension in STATA.(cite R and STATA here).^[All analysis for this paper is available in my GitHub: https://github.com/LizMas/ms_5] (change location of link). 
+
+what did i do and find? 
+
+This paper is laid out as follows: in the section below, I discuss relevant literature as it relates to the concept of interstate rivalries, state-sponsored terrorism, and the use of proxies. I then discuss the research design and analysis of Findley et al. (2012) and why their results, although valid and statistically sound, may be problematic. Next, I propose an alternative method of analysis in which I forgo the dyadic system entirely. Lastly, I discuss my results and the implications for future emperical research in the field of terrorism studies. 
+
+# Literature Review
+
+The authors include both contiguous states and noncontiguous states in their analysis, which departs slightly from traditional international conflict analysis which prefers to limit observations to contiguous states as a metric for possible occurrence of conflict. This is important because terrorist attacks can be planned and executed in states that have a rivalry but no physical land, sea, or colonial border.  
+
+This use of politically relevant and directed dyads allows the authors to incorporate covariates (rivalry, joint democracy, contiguity, and capability ratio) as controls, as well as practice good statistical practices by discounting irrelevant dyads that would increase the number of observations, thus increasing the likelihood of spurious statistical significance. 
+
+
+```{r}
+
+# 2) A beautiful graphic which uses this data: change it to be better 
+
+options(scipen = 999)
+
+graphic_1 <- data %>% 
+  group_by(year) %>% 
+  mutate(events = sum(terrorCounts))  
+
+plot <- ggplot(graphic_1, aes(x = year, y = events, group = rivalry, color = rivalry, fill= rivalry)) +
+  geom_col() +
+  labs(title = "Terrorism Events and Interstate Rivalry", 
+      subtitle = "Terrorist attacks occur more frequently in the presence of an interstate rivalry", 
+      caption = "Source: Games Rivals Play, Findley et al") +
+  xlab("Year") +
+  ylab("Number of Events") +
+  labs(fill = "Presence of Interstate Rivalry", color = "Presence of Interstate Rivalry") +
+    guides(fill = guide_legend(override.aes = list(color = NA)), 
+         color = FALSE, 
+         shape = FALSE)+
+          scale_fill_continuous(limits = c(0,1), breaks = c(0, 1), labels = c("Rivalry", "No Rivalry"))
+
+# plot
+
+```
+
+
+```{r generated bibliography, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+
+cleanbib()
+options("citation_format" = "pandoc")
+read.bibtex(file = "bib2.bib")
+
+#This is still a mess, but I can't for the life of me get the # off.
+ 
+```
+# Appendix 
+
