@@ -59,6 +59,20 @@ The authors include both contiguous states and noncontiguous states in their ana
 
 This use of politically relevant and directed dyads allows the authors to incorporate covariates (rivalry, joint democracy, contiguity, and capability ratio) as controls, as well as practice good statistical practices by discounting irrelevant dyads that would increase the number of observations, thus increasing the likelihood of spurious statistical significance. 
 
+# Extension 
+
+```{r}
+
+#this is my extension
+
+tab_ext_1 <- magick::image_read('table_1_unformatted.png')
+print(tab_ext_1)
+
+tab_ext_2 <- magick::image_read('table_2_unformatted.png')
+print(tab_ext_2)
+
+```
+
 
 ```{r}
 
@@ -98,4 +112,15 @@ read.bibtex(file = "bib2.bib")
  
 ```
 # Appendix 
+
+```{r}
+
+#this is Table 1, currently unformatted, from STATA. I did the replicaiton in STATA because from what I found, there is no direct equivalent cluster function in R. I couldn't replicate the results exactly in R but I could replicate them in STATA. For the sake of this project, I felt it would be better to just do it correctly in STATA to avoid a million caveats in R. 
+tab_rep_1 <- magick::image_read('rep_table_1_unformatted.png')
+print(tab_rep_1)
+
+tab_rep_2 <- magick::image_read('rep_table_2_unformatted.png')
+print(tab_rep_2)
+
+```
 
