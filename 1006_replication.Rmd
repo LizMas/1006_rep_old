@@ -1,8 +1,11 @@
 ---
-title: "Milestone 8" 
+title: "Demo Day" 
 author: "Liz Masten"
-date: "4/4/2020"
-output: html_document
+date: "4/29/2020"
+output: bookdown::pdf_document2
+bibliography: bib2.bib
+biblio-style: apalike 
+link_citations: TRUE
 ---
 
 
@@ -12,7 +15,6 @@ knitr::opts_chunk$set(echo = FALSE)
 library(foreign)
 library(tinytex)
 library(bookdown)
-library(stargazer)
 library(bibtex)
 library(yaml)
 library(knitcitations)
@@ -25,6 +27,9 @@ library(cluster)
 library(lmtest)
 library(plm)
 library(sandwich)
+library(stargazer)
+library(huxtable)
+
 ```
 
 # Abstract 
@@ -35,7 +40,7 @@ Findley, Piazza, and Young (2012) show that interstate rivalries are a positive 
 
 Findley, Piazza, and Young analyze transnational terrorism as a component of interstate rivalries, specifically focusing on the use of terrorism in proxy warfighting. Their main argument is that terrorist attacks are more likely to occur in the context of a rivalry between two states than in the absence of such a rivalry. They empirically test their hypothesis by analyzing “politically relevant directed state dyads.” They define politically relevant as states where “relationships of interest are at least possible” and utilize directed state dyads to indicate directionality of attacks (i.e. the state where the attack originated) in which there exists at least one major power. 
 
-I was able to successfully replicate the authors' findings in this paper exactly. Note that the authors suffered from a data management error at the time of publication and subsequently published errata results.(cite where I got data here). I based my analysis on the revised data and tables, which can be found in the Appendix. In an effort to not reinvent the wheel, and because there are no directly analagous R packages to translate the authors' original STATA code, I wrote and managed the project in R while running the replication in STATA.My extension is done in R. (cite R and STATA here).^[All analysis for this paper is available in my GitHub: https://github.com/LizMas/ms_5] (change location of link). 
+I was able to successfully replicate the authors' findings in this paper exactly. Note that the authors suffered from a data management error at the time of publication and subsequently published errata results.(cite where I got data here). I based my analysis on the revised data and tables, which can be found in the Appendix. In an effort to not reinvent the wheel, and because there are no directly analagous R packages to translate the authors' original STATA code, I wrote and managed the project in R while running the replication in STATA. My extension is done in R. (cite R and STATA here).^[All analysis for this paper is available in my GitHub: https://github.com/LizMas/ms_5] (change location of link). 
 
 I find that >>>>>>>>>>>
 
@@ -44,7 +49,7 @@ This paper is laid out as follows: in the section below, I discuss relevant lite
 
 # Literature Review
 
-States both use and suffer from terrorism. It is no secret that states support terrorist groups, actively or passively, willingly or unwillingly. States with strong and stable institutions may give groups direct aid including money, weapons, or logistic support. They may help with training and operations, back them diplomatically, assist organizing efforts, steer the group’s ideological direction, or provide sanctuary. States with weak capacity or institutional infighting may offer support in similar ways, but with the caveat that they couldn’t get rid of the group or its influence if they wanted to (footnote with specific examples).  (Byman et al. 2010).   
+States both use and suffer from terrorism. It is no secret that states support terrorist groups, actively or passively, willingly or unwillingly. States with strong and stable institutions may give groups direct aid including money, weapons, or logistic support. They may help with training and operations, back them diplomatically, assist organizing efforts, steer the group’s ideological direction, or provide sanctuary. States with weak capacity or institutional infighting may offer support in similar ways, but with the caveat that they couldn’t get rid of the group or its influence if they wanted to. (Byman et al. 2010).   
 
 Terrorist groups make appealing proxies because they specialize in activities that states are often unwilling or unable to do directly. They offer cover and plausible deniability in case an operation goes bad or is unpopular, allowing states to avoid directly committing an act of war against another state (Conrad, Findley et al, Laqueur 1996). Terrorist proxies are also disproportionally effective when considering the amount of money, time, and personnel it takes to orchestrate an attack versus the capital, infrastructural, and psychological damage they can inflict (Gamage 2007, Findley et al. 2012). This disproportionality makes proxies especially attractive to weak states who have rivalries with stronger states (Iran is an expert at using proxies to counter Saudi, US, and Israeli influence in the Middle East). Byman et al. (2010) advances another theory: that states may delegate to terrorist groups to ensure the state’s preferences continue beyond the effective global or regional influence of that state. Iranian support of nascent Hezbollah is a good case study of this. 
 
@@ -133,43 +138,67 @@ mod_wald_4 <- waldtest(m4)
 
 ```
 
-```{r ext_table}
+```{r ext_table, warning = FALSE, message = FALSE, echo = FALSE}
 
-ext_table <- stargazer::stargazer(mod_cluster_1, mod_cluster_2, mod_cluster_3, mod_cluster_4,
-                    type = 'text',
-                    title = "Quasipoisson Clustered Models of Transnational Terrorist Activity per Findley et al (2012)")
 
-ext_table
+#ext_table <- stargazer(mod_cluster_1, mod_cluster_2, mod_cluster_3, mod_cluster_4, 
+               #     type = 'latex',
+                #    title = "Quasipoisson Clustered Models of Transnational Terrorist Activity per Findley et al (2012)")
+
+#ext_table
 
 #stargazer broke latex? 
 
+print(mod_cluster_1)
+print(mod_cluster_2)
+print(mod_cluster_3)
+print(mod_cluster_4)
+
 ``` 
 
-```{r}
+```{r wald, results= 'asis', echo=FALSE, message=FALSE, warning=FALSE}
 
-wald_table <- stargazer(mod_wald_1, mod_wald_2, mod_wald_3, mod_wald_4, type = "text")
+#wald_table <- stargazer(mod_wald_1, mod_wald_2, mod_wald_3, mod_wald_4, type = "latex")
 
 #wald_table
 
 ```
 
 
--------------
-This design may be problematic because a key assumption of dyadic design is that the observations have to be independent events. Since states exist in a globalized world, rather than a vacuum, it is inappropriate to assume that dyadic interactions are independent from triadic (or greater) interactions (Robert S. Erikson (a1), Pablo M. Pinto (a2) and Kelly T. Rader (a3) ; Bennet and Stam). For example, let’s use Israel and Saudi Arabia as an example of a dyad. In the experimental design, we must assume that this dyadic relationship is independent, or not influenced by tertiary relationships. However, what about Iran, arguably both countries’ main regional rival? How can we be sure that the actions of Israel and Saudi Arabia are being made without consideration of an Iranian response? Additionally, because both countries have different stakes with respect to their Iranian rivalry, how can we control for their different responses? This interdependence is one of the main flaws with dyadic design and dyadic analysis risks “dramatically understat[ing] the size of standard errors and overstat[ing] the power of hypothesis tests” (Erikson et al.). 
-Findley et al. (2012) define their thought process of using directed dyads thusly: “First, we define the origin country as the nationality of the terrorists and the target country as the country (location) in which the terrorist event occurred. Second, we define the origin country as the nationality of the terrorists and the target country as the nationality of the victims. The origin country can be conceived as the exporter of violence while the target is the importer.” I interpret this as a definitional work-around to the problem of not knowing exactly who all is involved in a terrorist attack, but it does not solve this fundamental problem and rather risks assigning statistical significance to events that may have been misunderstood and coded incorrectly. Conrad (2016) argued this point exactly, saying “even knowing the nationality of the terrorists themselves does not help, since many state-sponsored terrorists are of a different nationality than their state sponsors. For example, knowing that a Lebanese Hizbollah agent pulled off an attack in Israel masks the possibility that the agent may have been sponsored by Iran. In such a case, knowing the nationality of the terrorist (Lebanese) is not useful.” 
-Because of the problems with dyadic design, some scholars have called for the practice to be abandoned entirely (Cranmer and Desmarais 2016) while others advise to proceed with extreme caution (Paul Poast). This extension is a modest attempt to weigh in on the dyad debate in empirical terrorism studies. I ran the regressions in Findley et al. (2012) without the dyad component and found ...the estimates are the same but the CIs are significantly different. I think the standard errors got MORE specific without the clusters, which is totally not what I was expecting, so I think something is up with the model. I need STATA help. 
-
 
 ```{r generated bibliography, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
 
-#cleanbib()
-#options("citation_format" = "pandoc")
-#read.bibtex(file = "bib2.bib")
+cleanbib()
+options("citation_format" = "pandoc")
+read.bibtex(file = "bib2.bib")
 
 #This is still a mess, but I can't for the life of me get the # off.
  
 ```
 # Appendix 
+
+Appendix A: Original Table 
+```{r, warning = FALSE, echo = FALSE, error = FALSE}
+
+# This is the orignal fpy table: 
+
+img <- magick::image_read('og_table_main.png')
+print(img)
+
+```
+
+Appendix B: Replication of results 
+
+Note: This table reports non-robust standard errors.  
+```{r, warning = FALSE, echo = FALSE, error = FALSE}
+
+# this is my replication, using regular SE instead of Robust SE because I couldn't get STATA to report the robust SEs. They were the same though. 
+
+img2 <- magick::image_read('stata_rep_main.png')
+print(img2)
+
+```
+
 
 ```{r, stata code}
 
