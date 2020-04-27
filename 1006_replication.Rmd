@@ -40,7 +40,7 @@ Findley, Piazza, and Young (2012) show that interstate rivalries are a positive 
 
 Findley, Piazza, and Young analyze transnational terrorism as a component of interstate rivalries, specifically focusing on the use of terrorism in proxy warfighting. Their main argument is that terrorist attacks are more likely to occur in the context of a rivalry between two states than in the absence of such a rivalry. They empirically test their hypothesis by analyzing “politically relevant directed state dyads.” They define politically relevant as states where “relationships of interest are at least possible” and utilize directed state dyads to indicate directionality of attacks (i.e. the state where the attack originated) in which there exists at least one major power [@findley2012games].
 
-I was able to successfully replicate the authors' findings in this paper exactly. Note that the authors suffered from a data management error at the time of publication and subsequently published errata results. I based my analysis on the revised data and tables, which can be found in the Appendix. In an effort to not reinvent the wheel, and because there are no directly analagous R packages to translate the authors' original STATA code, I wrote and managed the project in R while running the replication in STATA. My extension is done in R [@R]. 
+I was able to successfully replicate the authors' findings in this paper exactly. Note that the authors suffered from a data management error at the time of publication and subsequently published errata results. I based my analysis on the revised data and tables, which can be found in the Appendix. In an effort to not reinvent the wheel, and because there are no directly analagous R packages to translate the authors' original STATA code, I wrote and managed the project in R while running the replication in STATA. My extension is done in R. 
 
 In my extension, I run four dyadic quasipoisson models using the same data as the original authors. These models are similarly statistically significant to the original results, and the statistical significance of the rivalry variable is equivalent to the original findings. In fact, my models report a stronger effect of rivalry than the orignal paper. These results confirm that the authors' original findings are robust.
 
@@ -163,7 +163,6 @@ print(mod_cluster_4)
 
 ```
 
-# References 
 
 ```{r generated bibliography, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -272,4 +271,4 @@ print(img2)
 #estout m5 m6 m7 m8, cells(c se(par)) 
 
 ```
-
+# References
