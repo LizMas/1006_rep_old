@@ -73,7 +73,7 @@ I chose to use R’s general linear model using a quasipoisson distribution beca
 
 #na.omit to get rid of 15,000 observations in joint democracy. This was necessary for the clustering function to run. 
 
-data <- read.dta("updated_data.dta") %>% na.omit()
+data <- read.dta("stata/updated_data.dta") %>% na.omit()
 
 ```
 
@@ -195,11 +195,7 @@ read.bibtex(file = "bib2.bib")
 ```
 # Appendix 
 
-The STATA replication code can be found in my GitHub repo
-
-^[All analysis for this paper is available in my GitHub: https://github.com/LizMas/1006_replication].
-
-Appendix A: Original Table 
+Appendix A: Original Table^[All analysis for this paper is available in my GitHub: https://github.com/LizMas/1006_replication/tree/master/stata]. 
 ```{r, warning = FALSE, echo = FALSE, error = FALSE, message = FALSE}
 
 # This is the orignal fpy table: 
