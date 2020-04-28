@@ -30,6 +30,8 @@ library(sandwich)
 library(stargazer)
 library(gt)
 library(modelsummary)
+library(xtable)
+library(huxtable)
 library(tidyverse)
 
 ```
@@ -141,14 +143,20 @@ mod_wald_4 <- waldtest(m4)
 
 ```
 
-```{r ext_table, warning = FALSE, message = FALSE, echo = FALSE}
+```{r ext_table, results = 'asis', warning = FALSE, message = FALSE, echo = FALSE}
 
+model_comb <- matrix(c(mod_cluster_1,mod_cluster_2, mod_cluster_3, mod_cluster_4))
 
-#ext_table <- stargazer(mod_cluster_1, mod_cluster_2, mod_cluster_3, mod_cluster_4, 
-               #     type = 'latex',
-                #    title = "Quasipoisson Clustered Models of Transnational Terrorist Activity per Findley et al (2012)")
+#ext_table <- stargazer(model_comb, 
+ #                  type = "latex",
+  #                 title = "Quasipoisson Clustered Models of Transnational Terrorist Activity per Findley et al (2012)")
 
-#ext_table
+table1 <- huxreg("Model 1" = mod_cluster_1,
+                 "Model 2" = mod_cluster_2,
+                 "Model 3" = mod_cluster_3, 
+                 "Model 4" = mod_cluster_4)
+
+table1
 
 #stargazer broke latex? 
 
@@ -162,13 +170,20 @@ mod_wald_4 <- waldtest(m4)
 
 #msummary(models)
 
+#model_comb <- matrix(c(mod_cluster_1,mod_cluster_2, mod_cluster_3, mod_cluster_4))
+
+#print(xtable(model_comb, digits=3), type = 'latex')
+
+
 ``` 
 
-```{r wald, results= 'asis', echo=FALSE, message=FALSE, warning=FALSE}
+```{r wald, results= 'asis', header = FALSE, echo=FALSE, message=FALSE, warning=FALSE}
 
 #wald_table <- stargazer(mod_wald_1, mod_wald_2, mod_wald_3, mod_wald_4, type = "latex")
 
 #wald_table
+
+# lots of junk in the output. 
 
 ```
 
