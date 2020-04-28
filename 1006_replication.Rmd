@@ -51,9 +51,9 @@ This paper is laid out as follows: in the section below, I discuss relevant lite
 
 States both use and suffer from terrorism. It is no secret that states support terrorist groups, actively or passively, willingly or unwillingly. States with strong and stable institutions may give groups direct aid including money, weapons, or logistic support. They may help with training and operations, back them diplomatically, assist organizing efforts, steer the group’s ideological direction, or provide sanctuary. States with weak capacity or institutional infighting may offer support in similar ways, but with the caveat that they couldn’t get rid of the group or its influence if they wanted to [@byman2010agents].    
 
-Terrorist groups make appealing proxies because they specialize in activities that states are often unwilling or unable to do directly. They offer cover and plausible deniability in case an operation goes bad or is unpopular, allowing states to avoid directly committing an act of war against another state [@conrad2011interstate]. Terrorist proxies are also disproportionally effective when considering the amount of money, time, and personnel it takes to orchestrate an attack versus the capital, infrastructural, and psychological damage they can inflict. This disproportionality makes proxies especially attractive to weak states who have rivalries with stronger states (Iran prolifically uses proxies to counter Saudi, US, and Israeli influence in the Middle East). States may also delegate to terrorist groups to ensure the state’s preferences continue beyond the effective global or regional influence of that state [@byman2010agents]. Iranian support of nascent Hezbollah is a good case study of this. 
+Terrorist groups make appealing proxies because they specialize in activities that states are often unwilling or unable to do directly. They offer cover and plausible deniability in case an operation goes bad or is unpopular, allowing states to avoid directly committing an act of war against another state [@conrad2011interstate]. Terrorist proxies are also disproportionally effective when considering the amount of money, time, and personnel it takes to orchestrate an attack versus the capital, infrastructural, and psychological damage they can inflict. This disproportionality makes proxies especially attractive to weak states who have rivalries with stronger states (For example, Iran uses proxies to counter Saudi, US, and Israeli influence in the Middle East). States may also delegate to terrorist groups to ensure the state’s preferences continue beyond the effective global or regional influence of that state [@byman2010agents].
 
-The often surreptitious nature of terrorist proxies makes analyzing this phenomenon difficult.  The empirical study of terrorism, as a subfield of International Relations, tries to make sense of it in two main ways: using a country-year method of analysis, in which variables are analyzed continuously, and dyadic analysis, in which countries are paired and models are estimated having dyadic measurements as the outcome variable. International Relations scholars have a strong preference for dyadic analysis when possible, but terrorism scholars have been somewhat reticent to employ it. Terrorism scholars have traditionally favored using a domestic social and institutional or micro-foundational levels of analysis [@cranmer2016critique]. 
+The often surreptitious nature of terrorist proxies makes analyzing this phenomenon difficult.  The empirical study of terrorism, as a subfield of International Relations, tries to make sense of it in two main ways: using a country-year method of analysis, in which variables are analyzed continuously, and dyadic analysis, in which countries are paired and models are estimated having dyadic measurements as the outcome variable. International Relations scholars have a strong preference for dyadic analysis when possible, but terrorism scholars have been somewhat reticent to employ it. Terrorism scholars have traditionally favored using domestic social and institutional or micro-foundational levels of analysis [@cranmer2016critique]. 
 
 FPY were among the first scholars to use dyadic analysis in the field. For their experiment design, they employ a dyadic design to investigate the causal relationship between interstate rivalry and terrorism. They chose dyadic analysis because they deemed it “crucial for establishing causal chains between indicators and patterns of terrorism because it permits us to examine the interplay of both origin countries for terrorism—the countries from which terrorists hail—and target countries that experience terrorist attacks.” 
 
@@ -65,7 +65,7 @@ I successfully replicated the results from Findley et al. (2012). The code for t
 
 # Extension
 
-I chose to use R’s general linear model using a quasipoisson distribution because we are working with over-dispersed count data as a result of the authors’ use of dyads. I ran four models, using the same variables that the original authors included in their analysis, and wrapped the models in a clustering function to account for dyadic clustering. The results show that rivalry is highly statistically significant at P < 0.001 across all four models. This matches the FPY’s original findings. The models show a stronger effect of rivalry than the original findings, but all variables in this extension trend slightly higher than the original results. 
+FYP ran negative binomial regressions with STATA's cluster function. In R, I chose to use R’s general linear model using a quasipoisson distribution because the dataset contains over-dispersed count data as a result of FPY’s use of dyads. I ran four models, using the same variables that the original authors included in their analysis, and wrapped the models in a clustering function to account for dyadic clustering. The results show that rivalry is highly statistically significant at P < 0.001 across all four models. This matches the FPY’s original findings. The models show a stronger effect of rivalry than the original findings, but all variables in this extension trend slightly higher than the original results. 
 
 ```{r}
 
@@ -120,23 +120,15 @@ m4 <- glm(data = data, terrorCounts2 ~ rivalry + jointDem1 + logcapratio + histo
 
 ```{r}
 
-#run the function on the data. Equivalent of cluster(dyadid) from STATA:  
+#run the function on the data.   
 
 mod_cluster_1 <- cluster_se(m1, data$dyadid)
 
-mod_wald_1 <- waldtest(m1)
-
 mod_cluster_2 <- cluster_se(m2, data$dyadid)
-
-mod_wald_2 <- waldtest(m2)
 
 mod_cluster_3 <- cluster_se(m3, data$dyadid)
 
-mod_wald_3 <- waldtest(m3)
-
 mod_cluster_4 <- cluster_se(m4, data$dyadid)
-
-mod_wald_4 <- waldtest(m4)
 
 ```
 
@@ -165,7 +157,7 @@ number_format = 3)
 # Adding a title
 
 tab_final <- tab_format %>%
-set_caption("Quasipoisson Clustered Models of Transnational Terrorist Activity per Findley et al (2012)")
+set_caption("Table 1: Quasipoisson Clustered Models of Transnational Terrorist Activity per Findley et al (2012)")
 
 tab_final
 
@@ -173,9 +165,11 @@ tab_final
 
 # Critique 
 
-While statistically robust, the results reported by both FPY and this paper may be problematic. This problem lies in the paper’s dyadic design. A key assumption of dyadic design is that the observations have to be independent events. Since states exist in a globalized world, rather than a vacuum, it is inappropriate to assume that dyadic interactions are independent from triadic (or greater) interactions. For example, let’s use Israel and Saudi Arabia as an example of a dyad. In the experimental design, we must assume that this dyadic relationship is independent, or not influenced by tertiary relationships. However, what about Iran, arguably both countries’ main regional rival? How can we be sure that the actions of Israel and Saudi Arabia are being made without consideration of an Iranian response? Additionally, because both countries have different stakes with respect to their Iranian rivalry, how can we control for their different responses? This interdependence is one of the main flaws with dyadic design and dyadic analysis risks “dramatically understat[ing] the size of standard errors and overstat[ing] the power of hypothesis tests” [erikson2014dyadic]. 
+While statistically robust, the results reported by both FPY and this paper may be problematic. This problem lies in the paper’s dyadic design. A key assumption of dyadic design is that the observations have to be independent events. Since states exist in a globalized world, rather than a vacuum, it is inappropriate to assume that dyadic interactions are independent from triadic (or greater) interactions. For example, let’s use Israel and Saudi Arabia as an example of a dyad. In the experimental design, we must assume that this dyadic relationship is independent, or not influenced by tertiary relationships. However, what about Iran, arguably both countries’ main regional rival? How can we be sure that the actions of Israel and Saudi Arabia are being made without consideration of an Iranian response? Additionally, because both countries have different stakes with respect to their Iranian rivalry, how can we control for their different responses? This interdependence is one of the main flaws with dyadic design.
 
-FPY define their thought process of using directed dyads thusly: “First, we define the origin country as the nationality of the terrorists and the target country as the country (location) in which the terrorist event occurred. Second, we define the origin country as the nationality of the terrorists and the target country as the nationality of the victims. The origin country can be conceived as the exporter of violence while the target is the importer.” I interpret this as a definitional work-around to the problem of not knowing exactly who all is involved in a terrorist attack, but it does not solve this fundamental problem and rather risks assigning statistical significance to events that may have been misunderstood and coded incorrectly. 
+Additionally, dyads double the amount of observations in a dataset, even though the number of independent cases does not change. This can lead to statistical significance by virtue of increased ovservations. Because of these issues, dyadic analysis risks “dramatically understat[ing] the size of standard errors and overstat[ing] the power of hypothesis tests” [erikson2014dyadic]. We can see this in Table 1 above. Note how many variables are reported to be very statistically significant. 
+
+FPY define their thought process of using directed dyads thusly: “First, we define the origin country as the nationality of the terrorists and the target country as the country (location) in which the terrorist event occurred. Second, we define the origin country as the nationality of the terrorists and the target country as the nationality of the victims. The origin country can be conceived as the exporter of violence while the target is the importer.” I interpret this as a work-around to the problem of not knowing exactly who all is involved in a terrorist attack. It does not solve this fundamental problem and instead risks assigning statistical significance to events that may have been misunderstood and coded incorrectly. 
 
 Conrad (2016) argued this point exactly, saying “even knowing the nationality of the terrorists themselves does not help, since many state-sponsored terrorists are of a different nationality than their state sponsors. For example, knowing that a Lebanese Hizbollah agent pulled off an attack in Israel masks the possibility that the agent may have been sponsored by Iran. In such a case, knowing the nationality of the terrorist (Lebanese) is not useful.” 
 
@@ -183,8 +177,7 @@ Because of the problems with dyadic design, some scholars have called for the pr
 
 # Conclusion 
 
-
-
+FPY (2012) show that interstate rivalries are a positive predictor of transnational terrorist activity by analyzing politically relevant directed dyads. While I was able to successfully replicate their results and confirm their robustness in my extension, I call into question the experiment's design in general. Dyadic analysis is rapidly falling out of favor in the social sciences due to interdependency of events and the chance of assigning statistical significance to variables that should not be reported as such. 
 
 ```{r generated bibliography, echo=FALSE, message=FALSE, warning=FALSE, eval = FALSE}
 
