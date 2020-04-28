@@ -145,35 +145,44 @@ mod_wald_4 <- waldtest(m4)
 
 ```{r ext_table, results = 'asis', warning = FALSE, message = FALSE, echo = FALSE}
 
-model_comb <- matrix(c(mod_cluster_1,mod_cluster_2, mod_cluster_3, mod_cluster_4))
-
 #ext_table <- stargazer(model_comb, 
  #                  type = "latex",
   #                 title = "Quasipoisson Clustered Models of Transnational Terrorist Activity per Findley et al (2012)")
 
-table1 <- huxreg("Model 1" = mod_cluster_1,
+#table1 <- huxreg("Model 1" = mod_cluster_1,
+ #                "Model 2" = mod_cluster_2,
+  #               "Model 3" = mod_cluster_3, 
+   #              "Model 4" = mod_cluster_4)
+
+#table1
+
+
+# Creating the huxtable object (confidence intervals)
+tab_format <- huxreg("Model 1" = mod_cluster_1,
                  "Model 2" = mod_cluster_2,
                  "Model 3" = mod_cluster_3, 
-                 "Model 4" = mod_cluster_4)
+                 "Model 4" = mod_cluster_4,
+coefs = c('Intercept' = '(Intercept)',
+'Rivalry'='rivalry',
+'Joint Democracy' = 'jointDem1',
+'Logged Capacity Ratio' = 'logcapratio',
+'Contiguity' = 'contiguity',
+'History 1' = 'historyl1',
+'History 2' = 'historyl2',
+'Cold War' = 'coldwar1',
+'Conflict 1' = 'conflict1',
+'Conflict 2' = 'conflict2',
+'War 1' = 'war1',
+'War 2' = 'war2'),
+statistics = c('Total Observations' = 'nobs'),
+number_format = 3)
 
-table1
+# Adding a title
 
-#stargazer broke latex? 
+tab_final <- tab_format %>%
+set_caption("Quasipoisson Clustered Models of Transnational Terrorist Activity per Findley et al (2012)")
 
-# this also does not work: 
-
-#models <- list()
-#models[['Model 1']] <- mod_cluster_1
-#models[['Model 2']] <- mod_cluster_2
-#models[['Model 3']] <- mod_cluster_3
-#models[['Model 4']] <- mod_cluster_4
-
-#msummary(models)
-
-#model_comb <- matrix(c(mod_cluster_1,mod_cluster_2, mod_cluster_3, mod_cluster_4))
-
-#print(xtable(model_comb, digits=3), type = 'latex')
-
+tab_final
 
 ``` 
 
