@@ -1,5 +1,5 @@
 ---
-title: "Replication of Findley et al. (2012)" 
+title: "Replication of Findley, Piazza, and Young (2012)" 
 author: "Liz Masten"
 date: "4/29/2020"
 output: bookdown::pdf_document2
@@ -41,11 +41,11 @@ Findley, Piazza, and Young (2012) show that interstate rivalries are a positive 
 
 In their paper "Games Rivals Play: Terrorism in International Rivalries," Findley, Piazza, and Young (henceforth FPY) analyze transnational terrorism as a component of interstate rivalries, specifically focusing on the use of terrorism in proxy warfighting. Their main argument is that terrorist attacks are more likely to occur in the context of a rivalry between two states than in the absence of such a rivalry. They empirically test their hypothesis by analyzing “politically relevant directed state dyads.” They define politically relevant as states where “relationships of interest are at least possible” and utilize directed state dyads to indicate directionality of attacks (i.e. the state where the attack originated) in which there exists at least one major power [@findley2012games].
 
-I was able to successfully replicate FPY's findings in this paper exactly. Note that the authors suffered from a data management error at the time of publication and subsequently published errata results. I based my analysis on the revised data and tables, which can be found in the Appendix. In an effort to not reinvent the wheel, and because there are no directly analagous R packages to translate the authors' original STATA code, I wrote and managed the project in R while running the replication in STATA. My extension is done in R [@R]. 
+I was able to successfully replicate FPY's findings in this paper exactly. Note that the authors suffered from a data management error at the time of publication and subsequently published errata results. I based my analysis on the revised data and tables, which can be found in the Appendix. In an effort to not reinvent the wheel, and because there are no directly analogous R packages to translate the authors' original STATA code, I wrote and managed the project in R while running the replication in STATA. My extension is done in R [@R]. 
 
-In my extension, I run four dyadic quasipoisson models using the same (errata) data as the original authors. These models are similarly statistically significant to the original results, and the statistical significance of the rivalry variable is equivalent to the original findings. In fact, my models report a stronger effect of rivalry than the orignal paper. These results confirm that the authors' original findings are robust.
+In my extension, I run four dyadic quasipoisson models using the same (errata) data as the original authors. These models are similarly statistically significant to the original results, and the statistical significance of the rivalry variable is equivalent to the original findings. In fact, my models report a stronger effect of rivalry than the original paper. These results confirm that the authors' original findings are robust.
 
-This paper is laid out as follows: in the section below, I discuss relevant literature as it relates to the concept of interstate rivalries, state-sponsored terrorism, and the use of proxies. I then discuss FPY's research design and analysis and my successful replication of their results. Next, I conduct an extension which validates FPY's findings using dyadic quasipoisson models. Lastly, I discuss my results and the implications for future emperical research in the field of terrorism studies.^[All analysis for this paper is available in my GitHub: https://github.com/LizMas/1006_replication].
+This paper is laid out as follows: in the section below, I discuss relevant literature as it relates to the concept of interstate rivalries, state-sponsored terrorism, and the use of proxies. I then discuss FPY's research design and analysis and my successful replication of their results. Next, I conduct an extension which validates FPY's findings using dyadic quasipoisson models. Lastly, I discuss my results and the implications for future empirical research in the field of terrorism studies.^[All analysis for this paper is available in my GitHub: https://github.com/LizMas/1006_replication].
 
 # Literature Review
 
@@ -161,13 +161,14 @@ set_caption("Table 1: Quasipoisson Clustered Models of Transnational Terrorist A
 
 tab_final
 
-``` 
+```
+
 
 # Critique 
 
 While statistically robust, the results reported by both FPY and this paper may be problematic. This problem lies in the paper’s dyadic design. A key assumption of dyadic design is that the observations have to be independent events. Since states exist in a globalized world, rather than a vacuum, it is inappropriate to assume that dyadic interactions are independent from triadic (or greater) interactions. For example, let’s use Israel and Saudi Arabia as an example of a dyad. In the experimental design, we must assume that this dyadic relationship is independent, or not influenced by tertiary relationships. However, what about Iran, arguably both countries’ main regional rival? How can we be sure that the actions of Israel and Saudi Arabia are being made without consideration of an Iranian response? Additionally, because both countries have different stakes with respect to their Iranian rivalry, how can we control for their different responses? This interdependence is one of the main flaws with dyadic design.
 
-Additionally, dyads double the amount of observations in a dataset, even though the number of independent cases does not change. This can lead to statistical significance by virtue of increased ovservations. Because of these issues, dyadic analysis risks “dramatically understat[ing] the size of standard errors and overstat[ing] the power of hypothesis tests” [erikson2014dyadic]. We can see this in Table 1 above. Note how many variables are reported to be very statistically significant. 
+Additionally, dyads double the amount of observations in a dataset, even though the number of independent cases does not change. This can lead to statistical significance by virtue of increased observations. Because of these issues, dyadic analysis risks “dramatically understat[ing] the size of standard errors and overstat[ing] the power of hypothesis tests” [erikson2014dyadic]. We can see this in Table 1 above. Note how many variables are reported to be very statistically significant. 
 
 FPY define their thought process of using directed dyads thusly: “First, we define the origin country as the nationality of the terrorists and the target country as the country (location) in which the terrorist event occurred. Second, we define the origin country as the nationality of the terrorists and the target country as the nationality of the victims. The origin country can be conceived as the exporter of violence while the target is the importer.” I interpret this as a work-around to the problem of not knowing exactly who all is involved in a terrorist attack. It does not solve this fundamental problem and instead risks assigning statistical significance to events that may have been misunderstood and coded incorrectly. 
 
