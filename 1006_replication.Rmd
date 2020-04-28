@@ -159,9 +159,14 @@ number_format = 3)
 tab_final <- tab_format %>%
 set_caption("Quasipoisson Clustered Models of Transnational Terrorist Activity per Findley et al (2012)")
 
+```
+
+```{r}
+
 tab_final
 
 ```
+
 
 
 # Critique 
@@ -174,7 +179,7 @@ FPY define their thought process of using directed dyads thusly: “First, we de
 
 Conrad (2016) argued this point exactly, saying “even knowing the nationality of the terrorists themselves does not help, since many state-sponsored terrorists are of a different nationality than their state sponsors. For example, knowing that a Lebanese Hizbollah agent pulled off an attack in Israel masks the possibility that the agent may have been sponsored by Iran. In such a case, knowing the nationality of the terrorist (Lebanese) is not useful.” 
 
-Because of the problems with dyadic design, some scholars have called for the practice to be abandoned entirely [cranmer2016critique] while others advise to proceed with extreme caution [poast2016dyads]. Abandoning dyadic design in favor of an alternative (perhaps country-year) is beyond the scope of this paper and would have involved recoding most variables entirely. This is an interesting opportunity for future scholarship. 
+Because of the problems with dyadic design, some scholars have called for the practice to be abandoned entirely [@cranmer2016critique] while others advise to proceed with extreme caution [@poast2016dyads]. Abandoning dyadic design in favor of an alternative (perhaps country-year) is beyond the scope of this paper and would have involved recoding most variables entirely. This is an interesting opportunity for future scholarship. 
 
 # Conclusion 
 
